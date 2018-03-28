@@ -5,5 +5,12 @@
   "repository": "https://github.com/multi-test/multi-test-web",
   "author": "Yaroslav Serhieiev <noomorph@gmail.com>",
   "license": "GPL-3",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "hyperapp": "^1.2.5",
+    "hyperapp-router": "^0.2.2"
+  },
+  "devDependencies": {
+    "typescript": "^2.8.1"
+  }
 }
