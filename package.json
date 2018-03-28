@@ -1,0 +1,9 @@
+{
+  "name": "multi-test-web",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/multi-test/multi-test-web",
+  "author": "Yaroslav Serhieiev <noomorph@gmail.com>",
+  "license": "GPL-3",
+  "private": false
+}
