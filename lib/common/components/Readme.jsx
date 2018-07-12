@@ -1,5 +1,5 @@
 import { h } from "hyperapp";
-import { I18N_CONTINUE } from "../resources/labels";
+import { I18N_CONTINUE } from "../../cattell/resources/labels";
 
 export function Readme({ name, description, onClick }) {
     return (

@@ -1,3 +1,5 @@
+import resolve from 'rollup-plugin-node-resolve';
+
 // rollup.config.js
 export default {
     input: './tmp/index.js',
@@ -6,12 +8,12 @@ export default {
         format: 'iife',
         globals: {
             'hyperapp': 'hyperapp',
-            "@hyperapp/router": 'hyperappRouter',
+            // 'hyperapp-hash-router': 'hyperappRouter',
         },
     },
-    plugins: [],
+    plugins: [resolve()],
     external: [
-        "hyperapp",
-        "@hyperapp/router",
+        'hyperapp',
+        // 'hyperapp-hash-router',
     ],
 };
