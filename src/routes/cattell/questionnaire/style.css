@@ -1,0 +1,20 @@
+.cattellQuestionnaire {
+    background: #426284;
+    /*overflow: hidden;*/
+}
+
+.cattellStrip {
+    display: flex;
+    padding: 1em;
+    flex-wrap: nowrap;
+    transition: 1s transform ease;
+}
+
+.cattellCard {
+    flex: 1 0 auto;
+    width: 60vw;
+    margin: 0 1em;
+}
+
+.cattellCard h2 {
+}

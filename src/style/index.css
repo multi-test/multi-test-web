@@ -1,0 +1,35 @@
+@import url('https://unpkg.com/purecss@1.0.0/build/pure-min.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed&subset=cyrillic-ext');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+	border: 0;
+	margin: 0;
+	padding: 1.5em 0;
+
+	font-family: "Roboto Condensed", Arial, sans-serif;
+	font-size: 18px;
+	line-height: 150%;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	color: #fff;
+    background-color: #426284;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    outline: 0;
+}
+
+#app {
+	height: 100%;
+}
