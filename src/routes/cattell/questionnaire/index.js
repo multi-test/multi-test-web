@@ -8,7 +8,7 @@ function CattellQuestionnaire({ session }) {
 		<div>
 			<h2>Тест Кеттела</h2>
 			<div class={style.cattellQuestionnaire}>
-				<div class={style.cattellStrip} style="transform: translateX(-45vw);">
+				<div class={style.cattellStrip}>
 					{questions.map((question, index) => (
 						<Card className={style.cattellCard} {...question} index={index + 1} active={index === 1} enabled={index === 0} />
 					))}
