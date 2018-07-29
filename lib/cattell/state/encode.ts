@@ -1,5 +1,5 @@
+import {BitStream} from 'bit-buffer';
 import {CattellState} from "./type";
-import {WritableBitStream} from "./BitStream";
 
 function answerToBit2(answer: '' | 'A' | 'B' | 'C'): 0 | 1 | 2 | 3 {
     switch (answer) {
@@ -19,27 +19,20 @@ function genderToBit2(gender: 'M' | 'F' | ''): 0 | 1 | 2 {
 }
 
 export function encodeState(state: CattellState): string {
-    const bitStream = new WritableBitStream();
-    bitStream.writeByte(state.position);
+    const bitStream = new BitStream(new ArrayBuffer(49));
+    bitStream.writeUint8(state.position);
 
     for (const answer of state.answers) {
-        bitStream.writeBit2(answerToBit2(answer));
+        bitStream.writeBits(answerToBit2(answer), 2);
     }
 
-    bitStream.writeBit2(genderToBit2(state.profile.gender));
-    bitStream.writeByte(state.profile.age);
+    bitStream.writeBits(genderToBit2(state.profile.gender), 2);
+    bitStream.writeUint8(state.profile.age);
 
-    let hash = '';
-    const bytes = bitStream.getBytes();
+    bitStream.index = 0;
+    const bits49 = bitStream.readArrayBuffer(49);
+    const bitsString = String.fromCharCode.apply(null, bits49);
+    const hash = bitsString + state.profile.name;
 
-    // istanbul ignore next
-    if (bytes !== null) {
-        for (const byte of bytes) {
-            hash += String.fromCharCode(byte);
-        }
-    }
-
-    hash += state.profile.name;
-
-    return btoa(unescape(encodeURIComponent(hash)))
+    return btoa(unescape(encodeURIComponent(hash)));
 }
