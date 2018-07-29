@@ -1,8 +1,12 @@
+export type Gender = 'M' | 'F';
+export type CattelAnswer = 'A' | 'B' | 'C';
+export type Blank<T> = T | '';
+
 export type CattellState = {
     position: number;
-    answers: ('A' | 'B' | 'C' | '')[];
+    answers: Blank<CattelAnswer>[];
     profile: {
-        gender: 'M' | 'F' | '';
+        gender: Blank<Gender>;
         age: number;
         name: string;
     };
@@ -10,9 +14,9 @@ export type CattellState = {
 
 export type FinalCattellState = {
     position: number;
-    answers: ('A' | 'B' | 'C')[];
+    answers: CattelAnswer[];
     profile: {
-        gender: 'M' | 'F';
+        gender: Gender;
         age: number;
         name: string;
     };

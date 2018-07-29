@@ -6,7 +6,7 @@ export default function createBlankCattellState(): CattellState {
         answers: new Array(187).fill(''),
         profile: {
             gender: '',
-            age: NaN,
+            age: 0,
             name: '',
         },
     };

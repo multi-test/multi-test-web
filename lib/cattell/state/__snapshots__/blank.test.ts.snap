@@ -193,7 +193,7 @@ Object {
   ],
   "position": 0,
   "profile": Object {
-    "age": NaN,
+    "age": 0,
     "gender": "",
     "name": "",
   },

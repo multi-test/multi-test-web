@@ -214,6 +214,24 @@ describe('cattell.state.validate', () => {
                     },
                 })).toBe(true));
 
+            it('with .age == NaN - should be considered invalid', () =>
+                expect(validateIntermediate({
+                    ...state,
+                    profile: {
+                        ...state.profile,
+                        age: NaN,
+                    },
+                })).toBe(false));
+
+            it('with .age == 0 - should be considered valid (blank)', () =>
+                expect(validateIntermediate({
+                    ...state,
+                    profile: {
+                        ...state.profile,
+                        age: 0,
+                    },
+                })).toBe(true));
+
             it('with .age < 16 - should be considered invalid', () =>
                 expect(validateIntermediate({
                     ...state,
@@ -295,7 +313,7 @@ describe('cattell.state.validate', () => {
         });
 
         it('should consider a state with missing age invalid', () => {
-            state.profile.age = NaN;
+            state.profile.age = 0;
 
             expect(validateFinalCattellState(state)).toBe(false);
             expect(validateIntermediateCattellState(state)).toBe(true);

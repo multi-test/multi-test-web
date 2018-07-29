@@ -1,43 +1,59 @@
-import {defaultStateForCattell} from "./defaultState";
+import {BitStream} from 'bit-buffer';
+import {Blank, CattelAnswer, CattellState, Gender} from "./type";
+import {fromBase64} from "./base64";
 
-const SESSION_PREFIX = '#/session/';
+function decodeAnswer(bitStream: BitStream): Blank<CattelAnswer> {
+    const bit2 = bitStream.readBits(2, false);
 
-function bit2toGender(bit2) {
     switch (bit2)  {
-        case 1: return 'male';
-        case 2: return 'female';
-        default: return undefined;
+        case 0b01: return 'A';
+        case 0b10: return 'B';
+        case 0b11: return 'C';
+        default: return '';
     }
 }
 
-export function decodeState(encoded) {
-    if (encoded && encoded.startsWith(SESSION_PREFIX)) {
-        const hash = decodeURIComponent(escape(atob(encoded.slice(SESSION_PREFIX.length))));
+function decodeGender(bitStream: BitStream): Blank<Gender> {
+    const bit2 = bitStream.readBits(2, false);
 
-        const position = hash.charCodeAt(0);
-        const answers = [];
-        for (let i = 0; i < 47; i++) {
-            const code = hash.charCodeAt(i + 1);
-            answers.push((code & 0x11000000b) >> 6);
-            answers.push((code & 0x00110000b) >> 4);
-            answers.push((code & 0x00001100b) >> 2);
-            answers.push((code & 0x00000011b));
-        }
+    switch (bit2)  {
+        case 0b01: return 'M';
+        case 0b10: return 'F';
+        default: return '';
+    }
+}
 
-        const gender = bit2toGender(answers.pop());
-        const age = hash.charCodeAt(48);
-        const name = hash.slice(49);
+function decodeAge(bitStream: BitStream): number {
+    const bit6 = bitStream.readBits(6, false);
+    return bit6 === 0 ? 0 : 15 + bit6;
+}
 
-        return {
-            position,
-            answers,
-            profile: {
-                gender,
-                age,
-                name,
-            },
-        };
+export function decodeState(base64: string): CattellState {
+    const base64Data = base64.substring(0, 65);
+    const bitStream = new BitStream(new ArrayBuffer(49));
+
+    for (let i = 0; i < 65; i++) {
+        const code = fromBase64(base64Data[i]);
+        bitStream.writeBits(code, 6);
     }
 
-    return defaultStateForCattell();
+    bitStream.index = 0;
+    const position = bitStream.readUint8();
+    const answers = new Array<Blank<CattelAnswer>>(187);
+    for (let i = 0; i < 187; i++) {
+        answers[i] = decodeAnswer(bitStream);
+    }
+    const gender = decodeGender(bitStream);
+    const age = decodeAge(bitStream);
+    const name = decodeURIComponent(escape(atob(base64.substring(65))));
+
+    return {
+        position,
+        answers,
+        profile: {
+            gender,
+            age,
+            name,
+        },
+    };
 }

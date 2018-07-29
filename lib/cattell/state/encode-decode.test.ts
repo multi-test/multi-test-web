@@ -1,8 +1,9 @@
-import {encodeState} from './encode';
 import createBlankCattellState from './blank';
 import {CattellState} from "./type";
+import {decodeState} from "./decode";
+import {encodeState} from './encode';
 
-describe('cattell.state.encode', () => {
+describe('cattell.state.encode-decode integration', () => {
     let state: CattellState;
 
     beforeEach(() => {
@@ -10,46 +11,44 @@ describe('cattell.state.encode', () => {
     });
 
     afterEach(() => {
-        const base64 = encodeState(state);
-        expect(base64).toMatchSnapshot();
-        expect(() => atob(base64.substring(65))).not.toThrow();
+        expect(decodeState(encodeState(state))).toEqual(state);
     });
 
     it('should create blank valid state matching the snapshot', () => {});
 
-    it('should encode position', () => {
+    it('should encode and decode position', () => {
         state.position = 1;
     });
 
-    it('should encode age', () => {
+    it('should encode and decode age', () => {
         state.profile.age = 70;
     });
 
-    it('should encode name', () => {
-        state.profile.name = 'Иванов '.repeat(10);
+    it('should encode and decode name', () => {
+        state.profile.name = 'Test '.repeat(12);
     });
 
-    it('should encode male gender', () => {
+    it('should encode and decode male gender', () => {
         state.profile.gender = 'M';
     });
 
-    it('should encode female gender', () => {
+    it('should encode and decode female gender', () => {
         state.profile.gender = 'F';
     });
 
-    it('should encode A answers', () => {
+    it('should encode and decode A answers', () => {
         state.answers.fill('A');
     });
 
-    it('should encode B answers', () => {
+    it('should encode and decode B answers', () => {
         state.answers.fill('B');
     });
 
-    it('should encode C answers', () => {
+    it('should encode and decode C answers', () => {
         state.answers.fill('C');
     });
 
-    it('should encode complete state', () => {
+    it('should encode and decode complete state', () => {
         for (let i = 0; i < 187; i++) {
             state.answers[i] = (i % 2 === 0) ? 'A' : (i % 3 === 0 ? 'B' : 'C');
         }

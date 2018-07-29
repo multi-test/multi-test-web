@@ -96,7 +96,7 @@ function validateGender(gender: any): boolean {
 }
 
 function validateAge(age: any): boolean {
-    return isNaN(age) || validateIntegerRange(16, age, 70);
+    return age === 0 || validateIntegerRange(16, age, 70);
 }
 
 function validateIntegerRange(min: number, value: any, max: number): value is number {
@@ -168,7 +168,7 @@ export function validateFinalCattellState(state: CattellState): state is FinalCa
         return false;
     }
 
-    if (isNaN(state.profile.age)) {
+    if (state.profile.age === 0) {
         return false;
     }
 

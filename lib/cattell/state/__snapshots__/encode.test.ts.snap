@@ -1,17 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`cattell.state.blank should create blank valid state matching the snapshot 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="`;
+exports[`cattell.state.encode should create blank valid state matching the snapshot 1`] = `"_________________________________________________________________"`;
 
-exports[`cattell.state.blank should encode A answers 1`] = `"AFVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVUVAA=="`;
+exports[`cattell.state.encode should encode A answers 1`] = `"_TUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUE_"`;
 
-exports[`cattell.state.blank should encode B answers 1`] = `"AMKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqwqrCqsKqKgA="`;
+exports[`cattell.state.encode should encode B answers 1`] = `"_npppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppJ_"`;
 
-exports[`cattell.state.blank should encode C answers 1`] = `"AMO/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/w7/Dv8O/PwA="`;
+exports[`cattell.state.encode should encode C answers 1`] = `"_7.............................................................O_"`;
 
-exports[`cattell.state.blank should encode age 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARg=="`;
+exports[`cattell.state.encode should encode age 1`] = `"________________________________________________________________2"`;
 
-exports[`cattell.state.blank should encode female gender 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADCgAA="`;
+exports[`cattell.state.encode should encode complete state 1`] = `"81Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2Y2YW20JjQstCw0L3QvtCyINCYLtCYLg=="`;
 
-exports[`cattell.state.blank should encode male gender 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=="`;
+exports[`cattell.state.encode should encode female gender 1`] = `"_______________________________________________________________f_"`;
 
-exports[`cattell.state.blank should encode name 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFRlc3QgVGVzdCBUZXN0IFRlc3QgVGVzdCBUZXN0IFRlc3QgVGVzdCBUZXN0IFRlc3QgVGVzdCBUZXN0IA=="`;
+exports[`cattell.state.encode should encode male gender 1`] = `"_______________________________________________________________P_"`;
+
+exports[`cattell.state.encode should encode name 1`] = `"_________________________________________________________________0JjQstCw0L3QvtCyINCY0LLQsNC90L7QsiDQmNCy0LDQvdC+0LIg0JjQstCw0L3QvtCyINCY0LLQsNC90L7QsiDQmNCy0LDQvdC+0LIg0JjQstCw0L3QvtCyINCY0LLQsNC90L7QsiDQmNCy0LDQvdC+0LIg0JjQstCw0L3QvtCyIA=="`;
+
+exports[`cattell.state.encode should encode position 1`] = `"A________________________________________________________________"`;
