@@ -1,6 +1,7 @@
 import {BitStream} from 'bit-buffer';
 import {CattellState} from "./type";
 import {toBase64} from "./base64";
+import * as koi8u from 'koi8-u';
 
 function answerToBit2(answer: '' | 'A' | 'B' | 'C'): 0 | 1 | 2 | 3 {
     switch (answer) {
@@ -19,8 +20,28 @@ function genderToBit2(gender: 'M' | 'F' | ''): 0 | 1 | 2 {
     }
 }
 
+function bitStreamToBase64(bitStream: BitStream): string {
+    let base64Data = '';
+    let bit6: number;
+
+    while (bitStream.bitsLeft >= 6) {
+        bit6 = bitStream.readBits(6, false);
+        base64Data += toBase64(bit6);
+    }
+
+    const bitsLeft = bitStream.bitsLeft;
+
+    if (bitsLeft > 0) {
+        bit6 = bitStream.readBits(bitsLeft, false);
+        base64Data += toBase64(bit6);
+    }
+
+    return base64Data;
+}
+
 export function encodeState(state: CattellState): string {
-    const bitStream = new BitStream(new ArrayBuffer(49));
+    const koi8uName: string = koi8u.encode(state.profile.name);
+    const bitStream = new BitStream(new ArrayBuffer(49 + koi8uName.length));
 
     {
         const byte = state.position;
@@ -42,12 +63,13 @@ export function encodeState(state: CattellState): string {
         bitStream.writeBits(bit6, 6);
     }
 
-    bitStream.index = 0;
-    let base64Data = '';
-    for (let i = 0; i < 65; i++) {
-        base64Data += toBase64(bitStream.readBits(6, false));
+    {
+        for (let i = 0; i < koi8uName.length; i++) {
+            const byte = koi8uName.charCodeAt(i);
+            bitStream.writeUint8(byte);
+        }
     }
 
-    const base64Name = btoa(unescape(encodeURIComponent(state.profile.name)));
-    return base64Data + base64Name;
+    bitStream.index = 0;
+    return bitStreamToBase64(bitStream);
 }

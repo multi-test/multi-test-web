@@ -10,7 +10,8 @@
     "test": "jest --verbose --coverage"
   },
   "dependencies": {
-    "bit-buffer": "^0.2.3"
+    "bit-buffer": "^0.2.3",
+    "koi8-u": "^1.0.0"
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",

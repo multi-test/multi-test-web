@@ -1,6 +1,7 @@
 import {BitStream} from 'bit-buffer';
 import {Blank, CattelAnswer, CattellState, Gender} from "./type";
 import {fromBase64} from "./base64";
+import * as koi8u from 'koi8-u';
 
 function decodeAnswer(bitStream: BitStream): Blank<CattelAnswer> {
     const bit2 = bitStream.readBits(2, false);
@@ -29,11 +30,10 @@ function decodeAge(bitStream: BitStream): number {
 }
 
 export function decodeState(base64: string): CattellState {
-    const base64Data = base64.substring(0, 65);
-    const bitStream = new BitStream(new ArrayBuffer(49));
+    const bitStream = new BitStream(new ArrayBuffer(base64.length));
 
-    for (let i = 0; i < 65; i++) {
-        const code = fromBase64(base64Data[i]);
+    for (let i = 0; i < base64.length; i++) {
+        const code = fromBase64(base64[i]);
         bitStream.writeBits(code, 6);
     }
 
@@ -45,7 +45,14 @@ export function decodeState(base64: string): CattellState {
     }
     const gender = decodeGender(bitStream);
     const age = decodeAge(bitStream);
-    const name = decodeURIComponent(escape(atob(base64.substring(65))));
+
+    let koi8uName = '';
+    while (bitStream.bitsLeft >= 8) {
+        koi8uName += String.fromCharCode(bitStream.readUint8());
+    }
+
+    const name = koi8u.decode(koi8uName);
+    console.log('AA', name, name.length);
 
     return {
         position,
