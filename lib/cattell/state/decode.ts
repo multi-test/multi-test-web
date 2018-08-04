@@ -1,7 +1,7 @@
 import {BitStream} from 'bit-buffer';
 import {Blank, CattelAnswer, CattellState, Gender} from "./type";
-import {fromBase64} from "./base64";
-import * as koi8u from 'koi8-u';
+import {decode as decodeKOI8U} from "../../utils/koi8-u";
+import {byteLength, toByteArray} from "../../utils/base64";
 
 function decodeAnswer(bitStream: BitStream): Blank<CattelAnswer> {
     const bit2 = bitStream.readBits(2, false);
@@ -29,30 +29,41 @@ function decodeAge(bitStream: BitStream): number {
     return bit6 === 0 ? 0 : 15 + bit6;
 }
 
-export function decodeState(base64: string): CattellState {
-    const bitStream = new BitStream(new ArrayBuffer(base64.length));
+function convert64StringToBitStream(string64: string): BitStream {
+    const bitStream = new BitStream(new ArrayBuffer(byteLength(string64)));
 
-    for (let i = 0; i < base64.length; i++) {
-        const code = fromBase64(base64[i]);
-        bitStream.writeBits(code, 6);
+    for (const byte of toByteArray(string64)) {
+        bitStream.writeUint8(byte);
     }
 
     bitStream.index = 0;
+    return bitStream;
+}
+
+function* readBitStream(bitStream: BitStream) {
+    while (bitStream.bitsLeft >= 8) {
+        yield bitStream.readUint8();
+    }
+}
+
+export function decodeState(string64: string): CattellState {
+    const bitStream = convert64StringToBitStream(string64);
+    const version = bitStream.readBits(2, false);
+    if (version !== 0) {
+        throw new Error(`Cannot parse an unsupported Cattell state serialization format (v${version})`);
+    }
+
     const position = bitStream.readUint8();
+
     const answers = new Array<Blank<CattelAnswer>>(187);
     for (let i = 0; i < 187; i++) {
         answers[i] = decodeAnswer(bitStream);
     }
+
     const gender = decodeGender(bitStream);
     const age = decodeAge(bitStream);
 
-    let koi8uName = '';
-    while (bitStream.bitsLeft >= 8) {
-        koi8uName += String.fromCharCode(bitStream.readUint8());
-    }
-
-    const name = koi8u.decode(koi8uName);
-    console.log('AA', name, name.length);
+    const name = decodeKOI8U(readBitStream(bitStream));
 
     return {
         position,

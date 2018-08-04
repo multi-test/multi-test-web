@@ -1,7 +1,7 @@
 import {BitStream} from 'bit-buffer';
 import {CattellState} from "./type";
-import {toBase64} from "./base64";
-import * as koi8u from 'koi8-u';
+import {encode as encodeKOI8U} from '../../utils/koi8-u';
+import {fromByteArray} from "../../utils/base64";
 
 function answerToBit2(answer: '' | 'A' | 'B' | 'C'): 0 | 1 | 2 | 3 {
     switch (answer) {
@@ -20,56 +20,30 @@ function genderToBit2(gender: 'M' | 'F' | ''): 0 | 1 | 2 {
     }
 }
 
-function bitStreamToBase64(bitStream: BitStream): string {
-    let base64Data = '';
-    let bit6: number;
-
-    while (bitStream.bitsLeft >= 6) {
-        bit6 = bitStream.readBits(6, false);
-        base64Data += toBase64(bit6);
-    }
-
-    const bitsLeft = bitStream.bitsLeft;
-
-    if (bitsLeft > 0) {
-        bit6 = bitStream.readBits(bitsLeft, false);
-        base64Data += toBase64(bit6);
-    }
-
-    return base64Data;
+function ageToBit6(age: number /* 0, 16-70 */): number {
+    return age === 0 ? 0 : age - 15;
 }
 
 export function encodeState(state: CattellState): string {
-    const koi8uName: string = koi8u.encode(state.profile.name);
-    const bitStream = new BitStream(new ArrayBuffer(49 + koi8uName.length));
+    const { position, answers, profile: { gender, age, name } } = state;
 
-    {
-        const byte = state.position;
+    const sizeInBytes = 49 + name.length;
+    const bitStream = new BitStream(new ArrayBuffer(sizeInBytes));
+    bitStream.writeBits(0, 2);
+    bitStream.writeUint8(position);
+
+    for (const answer of answers) {
+        bitStream.writeBits(answerToBit2(answer), 2);
+    }
+
+    bitStream.writeBits(genderToBit2(gender), 2);
+    bitStream.writeBits(ageToBit6(age), 6);
+
+    for (const byte of encodeKOI8U(name)) {
         bitStream.writeUint8(byte);
     }
 
-    for (const answer of state.answers) {
-        const bit2 = answerToBit2(answer);
-        bitStream.writeBits(bit2, 2);
-    }
-
-    {
-        const bit2 = genderToBit2(state.profile.gender);
-        bitStream.writeBits(bit2, 2);
-    }
-
-    {
-        const bit6 = state.profile.age === 0 ? 0 : state.profile.age - 15;
-        bitStream.writeBits(bit6, 6);
-    }
-
-    {
-        for (let i = 0; i < koi8uName.length; i++) {
-            const byte = koi8uName.charCodeAt(i);
-            bitStream.writeUint8(byte);
-        }
-    }
-
     bitStream.index = 0;
-    return bitStreamToBase64(bitStream);
+    const data = bitStream.readArrayBuffer(sizeInBytes);
+    return fromByteArray(data);
 }

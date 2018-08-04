@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cattell.state.encode should create blank valid state matching the snapshot 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="`;
+
+exports[`cattell.state.encode should encode A answers 1`] = `"AFRVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVAA=="`;
+
+exports[`cattell.state.encode should encode B answers 1`] = `"AKiqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqAA=="`;
+
+exports[`cattell.state.encode should encode C answers 1`] = `"APz/////////////////////////////////////////////////////////////AA=="`;
+
+exports[`cattell.state.encode should encode age 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3A=="`;
+
+exports[`cattell.state.encode should encode complete state 1`] = `"9HZ2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d2Z3d23enXwc7P1yDpLuku"`;
+
+exports[`cattell.state.encode should encode female gender 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg=="`;
+
+exports[`cattell.state.encode should encode male gender 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=="`;
+
+exports[`cattell.state.encode should encode name 1`] = `"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOnXwc7P1yDp18HOz9cg6dfBzs/XIOnXwc7P1yDp18HOz9cg6dfBzs/XIOnXwc7P1yDp18HOz9cg6dfBzs/XIOnXwc7P1yA="`;
+
+exports[`cattell.state.encode should encode position 1`] = `"BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=="`;

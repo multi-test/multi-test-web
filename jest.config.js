@@ -7,6 +7,9 @@ module.exports = {
   },
   "testURL": "http://localhost",
   "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+  "coveragePathIgnorePatterns": [
+    "lib/utils/base64.ts",
+  ],
   "moduleFileExtensions": [
     "ts",
     "tsx",

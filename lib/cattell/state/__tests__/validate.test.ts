@@ -1,6 +1,6 @@
-import { validateIntermediateCattellState, validateFinalCattellState } from './validate';
-import createBlankCattellState from "./blank";
-import {CattellState} from "./type";
+import { validateIntermediateCattellState, validateFinalCattellState } from '../validate';
+import createBlankCattellState from "../blank";
+import {CattellState} from "../type";
 
 describe('cattell.state.validate', () => {
     const examples: [CattellState, boolean][] = [];

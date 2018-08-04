@@ -1,5 +1,5 @@
-import createBlankCattellState from './blank';
-import {CattellState} from "./type";
+import createBlankCattellState from '../blank';
+import {CattellState} from "../type";
 
 describe('cattell.state.blank', () => {
     let state: CattellState;
