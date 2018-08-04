@@ -9,7 +9,7 @@ function* listStates() {
     for (const position of _.times(190)) {
         const state = createBlankCattellState();
         for (let i = 0; i < Math.min(position, 187); i++) {
-            state.answers[i] = ['', 'A', 'B', 'C'][_.random(0, 3)] as Blank<CattelAnswer>;
+            state.answers[i] = ['A', 'B', 'C'][_.random(0, 3)] as Blank<CattelAnswer>;
         }
         if (state.position >= 187) {
             state.profile.gender = ['', 'M', 'F'][_.random(0, 2)] as Blank<Gender>;
@@ -36,18 +36,14 @@ describe('cattell.state.encode-decode integration', () => {
     });
 
     it('should encode well', () => {
-        for (let i = 0; i < 500; i++) {
-            for (let j = 0; j < n; j++) {
-                hashes[j] = encodeState(states[j]);
-            }
+        for (let j = 0; j < n; j++) {
+            hashes[j] = encodeState(states[j]);
         }
     });
 
     it('should decode well', () => {
-        for (let i = 0; i < 500; i++) {
-            for (let j = 0; j < n; j++) {
-                states[j] = decodeState(hashes[j]);
-            }
+        for (let j = 0; j < n; j++) {
+            states[j] = decodeState(hashes[j]);
         }
     });
 });

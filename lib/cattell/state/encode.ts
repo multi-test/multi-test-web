@@ -2,6 +2,7 @@ import {BitStream} from 'bit-buffer';
 import {CattellState} from "./type";
 import {encode as encodeKOI8U} from '../../utils/koi8-u';
 import {fromByteArray} from "../../utils/base64";
+import {crc16} from "../../utils/crc16";
 
 function answerToBit2(answer: '' | 'A' | 'B' | 'C'): 0 | 1 | 2 | 3 {
     switch (answer) {
@@ -27,7 +28,7 @@ function ageToBit6(age: number /* 0, 16-70 */): number {
 export function encodeState(state: CattellState): string {
     const { position, answers, profile: { gender, age, name } } = state;
 
-    const sizeInBytes = 49 + name.length;
+    const sizeInBytes = 49 + name.length + 2;
     const bitStream = new BitStream(new ArrayBuffer(sizeInBytes));
     bitStream.writeBits(0, 2);
     bitStream.writeUint8(position);
@@ -44,6 +45,10 @@ export function encodeState(state: CattellState): string {
     }
 
     bitStream.index = 0;
-    const data = bitStream.readArrayBuffer(sizeInBytes);
-    return fromByteArray(data);
+    const body = bitStream.readArrayBuffer(sizeInBytes - 2);
+    bitStream.writeUint16(crc16(body));
+
+    bitStream.index = 0;
+    const binary = bitStream.readArrayBuffer(sizeInBytes);
+    return fromByteArray(binary);
 }
