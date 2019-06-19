@@ -20,6 +20,7 @@ module.exports = {
         path: `${__dirname}/src/tests`,
       },
     },
+    `gatsby-transformer-javascript-frontmatter`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
