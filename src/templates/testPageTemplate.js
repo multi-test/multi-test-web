@@ -10,7 +10,7 @@ export default function TestPageTemplate({ data: { javascriptFrontmatter } }) {
     <Layout>
       <SEO title={frontmatter.name} />
       <h1>{frontmatter.name}</h1>
-      <Link to="/">Go back to the homepage</Link>
+      <Link to="/tests">Go back to test picker</Link>
     </Layout>
   )
 }
